@@ -1,0 +1,32 @@
+# Ejemplo aislado de un ReplicaSet sin Deployment, para comparar.
+# El ReplicaSet mantiene el número de Pods, pero NO hace rolling updates ni rollback:
+# si se cambia la imagen aquí, los Pods existentes no se actualizan.
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: redis-rs
+  namespace: monitoring
+  labels:
+    app: redis-rs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis-rs
+  template:
+    metadata:
+      labels:
+        app: redis-rs
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.4-alpine
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
