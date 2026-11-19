@@ -65,9 +65,18 @@ kubectl get rs,pods -n $NS -l app=redis-rs
 pausa "Captura 9: ReplicaSet redis-rs con 2 Pods Running"
 
 kubectl get svc -n $NS
-pausa "Captura 10: Service grafana NodePort 80:30300"
+URL=$(minikube service grafana -n $NS --url)
+echo
+echo "▶ URL del NodePort: $URL"
+curl -s "$URL/api/health"; echo
+pausa "Captura 10: Service grafana NodePort 80:30300 respondiendo"
 
 echo "▶ Abriendo Grafana (usuario: admin, contraseña en k8s/01-secret.yaml)"
 echo "  Toma las capturas 11 (login) y 12 (Grafana con sesión iniciada)."
 echo "  Deja esta terminal abierta mientras usas el navegador; Ctrl+C para terminar."
-minikube service grafana -n $NS
+if [ -n "$CODESPACES" ]; then
+  echo "  En Codespaces: abre la pestaña PORTS y entra al puerto 3000 (Grafana)."
+  kubectl port-forward svc/grafana -n $NS 3000:80
+else
+  minikube service grafana -n $NS
+fi

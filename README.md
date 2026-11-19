@@ -18,6 +18,16 @@ k8s/
 
 - Minikube y kubectl instalados
 
+## Correr sin instalar nada (GitHub Codespaces)
+
+En el repo: **Code → Codespaces → Create codespace on main**. El entorno ya trae Docker, Minikube y kubectl. Cuando cargue la terminal:
+
+```bash
+./demo.sh
+```
+
+Para las capturas del navegador, abre la pestaña **PORTS** y entra al puerto 3000.
+
 ## Demo automática
 
 `./demo.sh` ejecuta todos los pasos de abajo en orden y se pausa en cada punto donde va una captura del informe.
