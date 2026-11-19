@@ -14,6 +14,22 @@ pausa() {
 }
 
 clear
+# Instala kubectl y minikube si no están (por ejemplo en GitHub Codespaces)
+if ! command -v kubectl >/dev/null 2>&1; then
+  echo "▶ Instalando kubectl"
+  curl -fsSLO "https://dl.k8s.io/release/$(curl -fsSL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  sudo install -m 0755 kubectl /usr/local/bin/kubectl && rm kubectl
+fi
+if ! command -v minikube >/dev/null 2>&1; then
+  echo "▶ Instalando minikube"
+  curl -fsSLO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+fi
+if ! docker info >/dev/null 2>&1; then
+  echo "✖ Docker no está disponible. En Codespaces, recrea el codespace para que tome .devcontainer/."
+  exit 1
+fi
+
 echo "▶ Iniciando Minikube"
 minikube status >/dev/null 2>&1 || minikube start
 
