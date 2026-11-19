@@ -18,6 +18,15 @@ k8s/
 
 - Minikube y kubectl instalados
 
+## Demo automática
+
+`./demo.sh` ejecuta todos los pasos de abajo en orden y se pausa en cada punto donde va una captura del informe.
+
+```bash
+chmod +x demo.sh
+./demo.sh
+```
+
 ## 1. Desplegar
 
 ```bash
